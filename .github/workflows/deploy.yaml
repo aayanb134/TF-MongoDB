@@ -1,0 +1,43 @@
+name: Deploy MongoDB
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  terraform:
+    name: Deploy MongoDB Atlas
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: latest
+
+      - name: Initialize Terraform
+        run: terraform init
+
+      - name: Deploy MongoDB Atlas
+        run: |
+          terraform apply -auto-approve \
+            -var "mongodb-version=7.0" \
+            -var "cluster-size=your-cluster-size" \
+            -var "aws-vpc-id=your-aws-vpc-id" \
+            -var "ip-address=''
+        env:
+          TF_VAR_public_key: ${{ secrets.MONGODB_ATLAS_PUBLIC_KEY }}
+          TF_VAR_private_key: ${{ secrets.MONGODB_ATLAS_PRIVATE_KEY }}
+        # Ensure you set the MONGODB_ATLAS_PUBLIC_KEY and MONGODB_ATLAS_PRIVATE_KEY secrets in your GitHub repository settings.
+
+      - name: Capture Terraform Outputs
+        id: terraform_outputs
+        run: echo "::set-output name=connection_string::$(terraform output -json connection_string)"
+
+      - name: Display Connection String
+        run:
+          echo "Connection String: ${{ steps.terraform_outputs.outputs.connection_string }}"
