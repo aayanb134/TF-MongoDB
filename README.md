@@ -16,15 +16,14 @@ Before using this module, make sure you have the following prerequisites:
 
 2. Configure your MongoDB Atlas API keys by replacing `"your-public-key"` and `"your-private-key"` in the `main.tf` file with your actual API keys.
 
-3. Define the necessary variables in `variables.tf`. Modify the variables to match your desired MongoDB Atlas configuration, such as project ID, cluster name, instance size, and more.
+3. Define the necessary variables in `variables.tf`. Modify the variables to match your desired MongoDB Atlas configuration, such as project ID, organisation ID, cluster name, instance size, and more.
 
 4. Configure the variables in `terraform.tfvars` with your specific values.
 
 5. Initialize your Terraform project:
    `terraform init`
-   
 6. Apply the configuration to create your MongoDB Atlas cluster:
-  `terraform apply`
+   `terraform apply`
 
 7. Review the Terraform plan, and if it looks correct, confirm the apply.
 

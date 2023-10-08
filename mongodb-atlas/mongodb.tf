@@ -7,6 +7,16 @@ terraform {
   }
 }
 
+provider "mongodbatlas" {
+  public_key  = "your-public-key"
+  private_key = "your-private-key"
+}
+
+resource "mongodbatlas_project" "main-project" {
+  name   = "mongodb-module-project"
+  org_id = var.org-id
+
+}
 resource "mongodbatlas_cluster" "my-cluster" {
   project_id                  = var.project-id
   name                        = var.name
